@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Voice2Task</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            🎙️ Voice2Task
+
+        </div>
+
+        <div class="tagline">
+
+            Turn voice into action
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="container">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <h1>
+
+                Your voice.
+                <span>Our actions.</span>
+
+            </h1>
+
+            <p>
+
+                Upload or record a voice message.
+                Voice2Task transcribes it, summarizes it,
+                and finds the tasks hidden inside.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             INPUT CARD
+        ================================================== -->
+
+        <section class="input-card">
+
+
+            <!-- =============================================
+                 UPLOAD
+            ============================================== -->
+
+            <div
+                class="upload-area"
+                id="uploadArea"
+            >
+
+                <div class="upload-icon">
+
+                    📁
+
+                </div>
+
+                <h2>
+
+                    Upload a voice message
+
+                </h2>
+
+                <p>
+
+                    MP3, WAV, M4A, OGG or WEBM
+
+                </p>
+
+
+                <button
+                    class="primary-button"
+                    id="uploadButton"
+                >
+
+                    Choose Audio
+
+                </button>
+
+
+                <input
+                    type="file"
+                    id="audioInput"
+                    accept="audio/*"
+                    hidden
+                >
+
+            </div>
+
+
+
+            <!-- =============================================
+                 DIVIDER
+            ============================================== -->
+
+            <div class="divider">
+
+                <span>OR</span>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 RECORDER
+            ============================================== -->
+
+            <div class="recorder-area">
+
+                <div class="record-icon">
+
+                    🎙️
+
+                </div>
+
+
+                <h2>
+
+                    Record directly
+
+                </h2>
+
+
+                <p id="recordStatus">
+
+                    Ready to record
+
+                </p>
+
+
+                <div class="record-controls">
+
+                    <button
+                        class="record-button"
+                        id="recordButton"
+                    >
+
+                        🔴 Start Recording
+
+                    </button>
+
+
+                    <button
+                        class="stop-button"
+                        id="stopButton"
+                        disabled
+                    >
+
+                        ⏹ Stop
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="recordingTimer"
+                    class="recording-timer"
+                >
+
+                    00:00
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 SELECTED AUDIO
+            ============================================== -->
+
+            <div
+                id="selectedAudio"
+                class="selected-audio hidden"
+            >
+
+                <div>
+
+                    🎵
+                    <span id="selectedAudioName">
+                        No audio selected
+                    </span>
+
+                </div>
+
+                <button
+                    id="removeAudioButton"
+                    class="remove-button"
+                >
+
+                    ✕
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 AUDIO PLAYER
+            ============================================== -->
+
+            <div
+                id="audioPreview"
+                class="audio-preview hidden"
+            >
+
+                <audio
+                    id="audioPlayer"
+                    controls
+                ></audio>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 PROCESS BUTTON
+            ============================================== -->
+
+            <button
+                id="processButton"
+                class="process-button"
+                disabled
+            >
+
+                ✨ Process Voice
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LOADING
+        ================================================== -->
+
+        <section
+            id="loadingSection"
+            class="loading-section hidden"
+        >
+
+            <div class="loader"></div>
+
+            <h2>
+
+                Understanding your voice...
+
+            </h2>
+
+            <p>
+
+                Transcribing and finding actionable tasks.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================== -->
+
+        <section
+            id="resultsSection"
+            class="results-section hidden"
+        >
+
+
+            <div class="results-header">
+
+                <h2>
+
+                    ✨ Your Voice, Organized
+
+                </h2>
+
+                <button
+                    id="newMessageButton"
+                    class="secondary-button"
+                >
+
+                    + New Message
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 TRANSCRIPT
+            ============================================== -->
+
+            <div class="result-card">
+
+                <div class="result-title">
+
+                    📝 Original Transcript
+
+                </div>
+
+
+                <div
+                    id="transcript"
+                    class="transcript"
+                >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 SUMMARY
+            ============================================== -->
+
+            <div class="result-card">
+
+                <div class="result-title">
+
+                    ✨ Summary
+
+                </div>
+
+
+                <div
+                    id="summary"
+                    class="summary"
+                >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 KEY INFORMATION
+            ============================================== -->
+
+            <div class="result-card">
+
+                <div class="result-title">
+
+                    📌 Key Information
+
+                </div>
+
+
+                <div
+                    id="keyInfo"
+                    class="key-info"
+                >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 TASKS
+            ============================================== -->
+
+            <div class="result-card">
+
+                <div class="result-title">
+
+                    ✅ Actionable Tasks
+
+                </div>
+
+
+                <p class="result-description">
+
+                    These actions were detected from
+                    your voice message.
+
+                </p>
+
+
+                <div
+                    id="detectedTasks"
+                    class="detected-tasks"
+                >
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+
+            Voice2Task • Turn voice messages into actions 🚀
+
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
